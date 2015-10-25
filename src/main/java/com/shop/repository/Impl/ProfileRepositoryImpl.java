@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.shop.model.tables.Profile.PROFILE;
-
 @Service
 public class ProfileRepositoryImpl implements ProfileRepository{
 

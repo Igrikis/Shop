@@ -20,13 +20,14 @@ import javax.persistence.Table;
 @Table(name = "profile", schema = "shop")
 public class Profile implements Serializable {
 
-	private static final long serialVersionUID = 408844720;
+	private static final long serialVersionUID = 1060086663;
 
 	private Integer id;
 	private String  login;
 	private String  password;
 	private String  firstname;
 	private String  lastname;
+	private String  email;
 
 	public Profile() {}
 
@@ -36,6 +37,7 @@ public class Profile implements Serializable {
 		this.password = value.password;
 		this.firstname = value.firstname;
 		this.lastname = value.lastname;
+		this.email = value.email;
 	}
 
 	public Profile(
@@ -43,13 +45,15 @@ public class Profile implements Serializable {
 		String  login,
 		String  password,
 		String  firstname,
-		String  lastname
+		String  lastname,
+		String  email
 	) {
 		this.id = id;
 		this.login = login;
 		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
+		this.email = email;
 	}
 
 	@Id
@@ -96,5 +100,14 @@ public class Profile implements Serializable {
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+	}
+
+	@Column(name = "email", nullable = false, length = 255)
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

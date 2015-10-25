@@ -25,7 +25,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Profile extends TableImpl<ProfileRecord> {
 
-	private static final long serialVersionUID = 1625625941;
+	private static final long serialVersionUID = -1785660137;
 
 	/**
 	 * The reference instance of <code>shop.profile</code>
@@ -64,6 +64,11 @@ public class Profile extends TableImpl<ProfileRecord> {
 	 * The column <code>shop.profile.lastname</code>.
 	 */
 	public final TableField<ProfileRecord, String> LASTNAME = createField("lastname", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false), this, "");
+
+	/**
+	 * The column <code>shop.profile.email</code>.
+	 */
+	public final TableField<ProfileRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
 
 	/**
 	 * Create a <code>shop.profile</code> table reference

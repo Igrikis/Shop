@@ -13,8 +13,8 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record5;
-import org.jooq.Row5;
+import org.jooq.Record6;
+import org.jooq.Row6;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -24,9 +24,9 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @Entity
 @Table(name = "profile", schema = "shop")
-public class ProfileRecord extends UpdatableRecordImpl<ProfileRecord> implements Record5<Integer, String, String, String, String> {
+public class ProfileRecord extends UpdatableRecordImpl<ProfileRecord> implements Record6<Integer, String, String, String, String, String> {
 
-	private static final long serialVersionUID = 2034762857;
+	private static final long serialVersionUID = -60408405;
 
 	/**
 	 * Setter for <code>shop.profile.id</code>.
@@ -104,6 +104,21 @@ public class ProfileRecord extends UpdatableRecordImpl<ProfileRecord> implements
 		return (String) getValue(4);
 	}
 
+	/**
+	 * Setter for <code>shop.profile.email</code>.
+	 */
+	public void setEmail(String value) {
+		setValue(5, value);
+	}
+
+	/**
+	 * Getter for <code>shop.profile.email</code>.
+	 */
+	@Column(name = "email", nullable = false, length = 255)
+	public String getEmail() {
+		return (String) getValue(5);
+	}
+
 	// -------------------------------------------------------------------------
 	// Primary key information
 	// -------------------------------------------------------------------------
@@ -117,23 +132,23 @@ public class ProfileRecord extends UpdatableRecordImpl<ProfileRecord> implements
 	}
 
 	// -------------------------------------------------------------------------
-	// Record5 type implementation
+	// Record6 type implementation
 	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row5<Integer, String, String, String, String> fieldsRow() {
-		return (Row5) super.fieldsRow();
+	public Row6<Integer, String, String, String, String, String> fieldsRow() {
+		return (Row6) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row5<Integer, String, String, String, String> valuesRow() {
-		return (Row5) super.valuesRow();
+	public Row6<Integer, String, String, String, String, String> valuesRow() {
+		return (Row6) super.valuesRow();
 	}
 
 	/**
@@ -180,6 +195,14 @@ public class ProfileRecord extends UpdatableRecordImpl<ProfileRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Field<String> field6() {
+		return Profile.PROFILE.EMAIL;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer value1() {
 		return getId();
 	}
@@ -214,6 +237,14 @@ public class ProfileRecord extends UpdatableRecordImpl<ProfileRecord> implements
 	@Override
 	public String value5() {
 		return getLastname();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String value6() {
+		return getEmail();
 	}
 
 	/**
@@ -265,12 +296,22 @@ public class ProfileRecord extends UpdatableRecordImpl<ProfileRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ProfileRecord values(Integer value1, String value2, String value3, String value4, String value5) {
+	public ProfileRecord value6(String value) {
+		setEmail(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ProfileRecord values(Integer value1, String value2, String value3, String value4, String value5, String value6) {
 		value1(value1);
 		value2(value2);
 		value3(value3);
 		value4(value4);
 		value5(value5);
+		value6(value6);
 		return this;
 	}
 
@@ -288,7 +329,7 @@ public class ProfileRecord extends UpdatableRecordImpl<ProfileRecord> implements
 	/**
 	 * Create a detached, initialised ProfileRecord
 	 */
-	public ProfileRecord(Integer id, String login, String password, String firstname, String lastname) {
+	public ProfileRecord(Integer id, String login, String password, String firstname, String lastname, String email) {
 		super(Profile.PROFILE);
 
 		setValue(0, id);
@@ -296,5 +337,6 @@ public class ProfileRecord extends UpdatableRecordImpl<ProfileRecord> implements
 		setValue(2, password);
 		setValue(3, firstname);
 		setValue(4, lastname);
+		setValue(5, email);
 	}
 }
