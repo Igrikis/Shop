@@ -68,19 +68,16 @@ public class ApplicationContextConfig {
     }
 
     @Bean
-    public JOOQException jooqException(){
+    public JOOQException jooqException() {
         return new JOOQException();
     }
 
     @Bean
     public DefaultConfiguration configuration() {
         DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
-
         jooqConfiguration.set(connectionProvider());
         jooqConfiguration.set(new DefaultExecuteListenerProvider(
-                jooqException()
-        ));
-
+                jooqException()));
         String sqlDialectName = environment.getRequiredProperty(JOOQ_SQL_DIALECT);
         SQLDialect dialect = SQLDialect.valueOf(sqlDialectName);
         jooqConfiguration.set(dialect);
