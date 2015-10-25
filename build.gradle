@@ -1,0 +1,80 @@
+group 'shop'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    compile
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile "org.jooq:jooq:$jooqVersion"
+    compile "org.jooq:jooq-meta:$jooqVersion"
+    compile "org.jooq:jooq-codegen:$jooqVersion"
+    compile "javax.persistence:persistence-api:$persistenceApiVersion"
+    compile "org.springframework:spring-core:$springVersion"
+    compile "org.springframework:spring-web:$springVersion"
+    compile "org.springframework:spring-webmvc:$springVersion"
+    compile "org.springframework:spring-orm:$springVersion"
+    compile "org.springframework:spring-jdbc:$springVersion"
+    compile "org.springframework.security:spring-security-core:$springSecurityVersion"
+    compile "org.springframework.security:spring-security-web:$springSecurityVersion"
+    compile "org.springframework.security:spring-security-config:$springSecurityVersion"
+    compile "commons-dbcp:commons-dbcp:$commonsDbcpVersion"
+    compile "log4j:log4j:$log4jVersion"
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile "org.slf4j:slf4j-simple:$slf4jVersion"
+    runtime "mysql:mysql-connector-java:$mysqlConnectorJavaVersion"
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.jooq:jooq-codegen:3.6.2'
+        classpath 'mysql:mysql-connector-java:5.1.36'
+    }
+}
+
+def writer = new StringWriter()
+def xml = new groovy.xml.MarkupBuilder(writer)
+        .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.6.0.xsd') {
+    jdbc() {
+        driver('com.mysql.jdbc.Driver')
+        url('jdbc:mysql://localhost:3306')
+        user('root')
+        password('admin')
+    }
+    generator() {
+        database() {
+            name('org.jooq.util.mysql.MySQLDatabase')
+            inputSchema('shop')
+            includes('.*')
+        }
+        generate() {
+            generatedAnnotation('false')
+            records('true')
+            pojos('true')
+            jpaAnnotations('true')
+        }
+        target() {
+            packageName('com.shop.model')
+            directory('src/main/java')
+        }
+    }
+}
+
+org.jooq.util.GenerationTool.generate(
+        javax.xml.bind.JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.util.jaxb.Configuration.class)
+)
+
